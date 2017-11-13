@@ -538,7 +538,7 @@ gulp.task('github-release', (cb) => {
   conventionalGithubReleaser(
     {
       type: 'oauth',
-      token: '5bac194aea1a19dfd1d82499c025f1bb17fd39f8'
+      token: '793cd8597292426685ea21610453c628531df3a3'
     },
     { preset: 'angular' },
     cb);

@@ -1,0 +1,36 @@
+{
+  "generator-ngx-library": {
+    "version": "5.0.0",
+    "authorName": "Hariom Sharma",
+    "authorEmail": "hariom@appointy.com",
+    "githubUsername": "harryy2510",
+    "githubRepoName": "ngx-img",
+    "projectName": "ngx-img",
+    "projectVersion": "0.0.1",
+    "projectDescription": "Angular Image Upload & Crop",
+    "projectKeywords": [
+      "angular",
+      " image",
+      " upload",
+      " crop"
+    ],
+    "ngVersion": "4.0.0",
+    "ngModules": [
+      "core",
+      "common",
+      "forms",
+      "compiler"
+    ],
+    "otherDependencies": [
+      "cropperjs",
+      " @types/cropperjs"
+    ],
+    "ngPrefix": "ngx",
+    "useGreenkeeper": false,
+    "useCompodoc": false,
+    "enforceNgGitCommitMsg": false,
+    "exclusions": [
+      "demo/proxy.conf.json"
+    ]
+  }
+}

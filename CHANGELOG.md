@@ -1,3 +1,8 @@
+<a name="6.0.0"></a>
+# [6.0.0](https://github.com/harryy2510/ngx-img/compare/v5.0.0...v6.0.0) (2017-11-13)
+
+
+
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/harryy2510/ngx-img/compare/v4.0.0...v5.0.0) (2017-11-13)
 

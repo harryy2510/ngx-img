@@ -530,15 +530,15 @@ gulp.task('changelog', (cb) => {
 });
 
 gulp.task('github-release', (cb) => {
-  // if (!argv.ghToken && !process.env.CONVENTIONAL_GITHUB_RELEASER_TOKEN) {
-  //   gulpUtil.log(gulpUtil.colors.red(`You must specify a Github Token via '--ghToken' or set environment variable 'CONVENTIONAL_GITHUB_RELEASER_TOKEN' to allow releasing on Github`));
-  //   throw new Error(`Missing '--ghToken' argument and environment variable 'CONVENTIONAL_GITHUB_RELEASER_TOKEN' not set`);
-  // }
+  if (!argv.ghToken && !process.env.CONVENTIONAL_GITHUB_RELEASER_TOKEN) {
+    gulpUtil.log(gulpUtil.colors.red(`You must specify a Github Token via '--ghToken' or set environment variable 'CONVENTIONAL_GITHUB_RELEASER_TOKEN' to allow releasing on Github`));
+    throw new Error(`Missing '--ghToken' argument and environment variable 'CONVENTIONAL_GITHUB_RELEASER_TOKEN' not set`);
+  }
 
   conventionalGithubReleaser(
     {
       type: 'oauth',
-      token: '793cd8597292426685ea21610453c628531df3a3'
+      token: argv.ghToken || process.env.CONVENTIONAL_GITHUB_RELEASER_TOKEN
     },
     { preset: 'angular' },
     cb);

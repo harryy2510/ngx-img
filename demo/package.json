@@ -28,6 +28,7 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "include-media": "^1.4.9",
+    "ngx-highlightjs": "^1.2.1",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },

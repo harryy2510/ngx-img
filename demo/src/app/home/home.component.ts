@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Home | ngx-img');
+    this.titleService.setTitle('Home');
   }
 
   onSelect($event: any) {

@@ -12,10 +12,10 @@
 
 ## Demo
 
-View all the directives in action at https://harryy2510.github.io/ngx-img
+View in action at https://harryy2510.github.io/ngx-img
 
 ## Dependencies
-* [Angular](https://angular.io) (*requires* Angular 2 or higher, tested with 2.0.0)
+* [Angular](https://angular.io) (*requires* Angular 4 or higher, tested with 4.4.6)
 
 ## Installation
 Install above dependencies via *npm*. 
@@ -38,16 +38,16 @@ map: {
 
 Once installed you need to import the main module:
 ```js
-import { LibModule } from 'ngx-img';
+import { NgxImgModule } from 'ngx-img';
 ```
 The only remaining part is to list the imported module in your application module. The exact method will be slightly
-different for the root (top-level) module for which you should end up with the code similar to (notice ` LibModule .forRoot()`):
+different for the root (top-level) module for which you should end up with the code similar to (notice ` NgxImgModule .forRoot()`):
 ```js
-import { LibModule } from 'ngx-img';
+import { NgxImgModule } from 'ngx-img';
 
 @NgModule({
   declarations: [AppComponent, ...],
-  imports: [LibModule.forRoot(), ...],  
+  imports: [NgxImgModule.forRoot(), ...],  
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -57,11 +57,11 @@ export class AppModule {
 Other modules in your application can simply import ` LibModule `:
 
 ```js
-import { LibModule } from 'ngx-img';
+import { NgxImgModule } from 'ngx-img';
 
 @NgModule({
   declarations: [OtherComponent, ...],
-  imports: [LibModule, ...], 
+  imports: [NgxImgModule, ...], 
 })
 export class OtherModule {
 }

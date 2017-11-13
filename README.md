@@ -54,7 +54,7 @@ export class AppModule {
 }
 ```
 
-Other modules in your application can simply import ` LibModule `:
+Other modules in your application can simply import ` NgxImgModule `:
 
 ```js
 import { NgxImgModule } from 'ngx-img';

@@ -18,7 +18,7 @@
 
 <section class="home">
   <div class="container">
-    <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()"></ngx-img>
+    <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()" [config]="{ crop: [ { ratio: 1.5 }, { ratio: 1 }, { ratio: 1 } ] }"></ngx-img>
   </div>
   <div *ngIf="imgSrc.length" class="container mt-3">
     <h5>Preview</h5>

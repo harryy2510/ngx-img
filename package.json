@@ -1,7 +1,7 @@
 {
   "name": "ngx-img",
   "description": "Angular Image Upload &amp; Crop",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "filename": "./src/ngx-img.js",
   "homepage": "http://github.com/harryy2510/ngx-img",
   "author": {
@@ -29,6 +29,7 @@
     "start": "gulp build",
     "test": " gulp test",
     "demo": " gulp build:demo",
+    "publish": "gulp release --version=major --ghToken=ef01e749d249a31fc3674f863ffc6cac600d0a0d",
     "check-travis": " travis-status --repo=harryy2510/ngx-img --branch=master --fail-pending || echo 'Not yet passing'"
   },
   "dependencies": {

@@ -238,16 +238,19 @@ gulp.task('pre-compile', (cb) => {
 
 gulp.task('ng-compile',() => {
   return Promise.resolve()
-    // Compile to ES5.
-    .then(() => ngc([ '-p', `${buildFolder}/tsconfig.lib.es5.json` ])
-      .then(exitCode => exitCode === 0 ? Promise.resolve() : Promise.reject())
-      .then(() => gulpUtil.log('ES5 compilation succeeded.'))
-    )
+    .then(() => {
+      ngc(['-p', `${buildFolder}tsconfig.lib.es5.json`], () => {
+        Promise.reject();
+      });
+      Promise.resolve();
+    })
     // Compile to ES2015.
-    .then(() => ngc([ '-p', `${buildFolder}/tsconfig.lib.json` ])
-      .then(exitCode => exitCode === 0 ? Promise.resolve() : Promise.reject())
-      .then(() => gulpUtil.log('ES2015 compilation succeeded.'))
-    )
+    .then(() => {
+      ngc(['-p', `${buildFolder}tsconfig.lib.json`], () => {
+        Promise.reject();
+      });
+      Promise.resolve();
+    })
     .catch(e => {
       gulpUtil.log(gulpUtil.colors.red('ng-compilation failed. See below for errors.\n'));
       gulpUtil.log(gulpUtil.colors.red(e));

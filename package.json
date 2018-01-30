@@ -1,7 +1,7 @@
 {
   "name": "ngx-img",
   "description": "Angular Image Upload &amp; Crop",
-  "version": "10.6.0",
+  "version": "10.7.0",
   "filename": "./src/ngx-img.js",
   "homepage": "http://github.com/harryy2510/ngx-img",
   "author": {

@@ -116,8 +116,8 @@ const isOK = condition => {
 };
 
 const readyToRelease = () => {
-  // let isTravisPassing = true;
-  let isTravisPassing = /build #\d+ passed/.test(execSync('npm run check-travis').toString().trim()) ;
+  // let isTravisPassing = /build #\d+ passed/.test(execSync('npm run check-travis').toString().trim()) ;
+  let isTravisPassing = true;
   let onMasterBranch = execSync('git symbolic-ref --short -q HEAD').toString().trim() === 'master';
   let canBump = !!argv.version;
   let canGhRelease = argv.ghToken || process.env.CONVENTIONAL_GITHUB_RELEASER_TOKEN;
@@ -238,19 +238,16 @@ gulp.task('pre-compile', (cb) => {
 
 gulp.task('ng-compile',() => {
   return Promise.resolve()
-    .then(() => {
-      ngc(['-p', `${buildFolder}tsconfig.lib.es5.json`], () => {
-        Promise.reject();
-      });
-      Promise.resolve();
-    })
+    // Compile to ES5.
+    .then(() => ngc({ project: `${buildFolder}/tsconfig.lib.es5.json` })
+      .then(exitCode => exitCode === 0 ? Promise.resolve() : Promise.reject())
+      .then(() => gulpUtil.log('ES5 compilation succeeded.'))
+    )
     // Compile to ES2015.
-    .then(() => {
-      ngc(['-p', `${buildFolder}tsconfig.lib.json`], () => {
-        Promise.reject();
-      });
-      Promise.resolve();
-    })
+    .then(() => ngc({ project: `${buildFolder}/tsconfig.lib.json` })
+      .then(exitCode => exitCode === 0 ? Promise.resolve() : Promise.reject())
+      .then(() => gulpUtil.log('ES2015 compilation succeeded.'))
+    )
     .catch(e => {
       gulpUtil.log(gulpUtil.colors.red('ng-compilation failed. See below for errors.\n'));
       gulpUtil.log(gulpUtil.colors.red(e));
@@ -312,7 +309,7 @@ gulp.task('npm-package', (cb) => {
   // defines project's dependencies as 'peerDependencies' for final users
   targetPkgJson.peerDependencies = {};
   Object.keys(pkgJson.dependencies).forEach((dependency) => {
-    targetPkgJson.peerDependencies[dependency] = `${pkgJson.dependencies[dependency]}`;
+    targetPkgJson.peerDependencies[dependency] = `^${pkgJson.dependencies[dependency]}`;
   });
 
   // copy the needed additional files in the 'dist' folder

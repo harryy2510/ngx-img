@@ -309,7 +309,7 @@ gulp.task('npm-package', (cb) => {
   // defines project's dependencies as 'peerDependencies' for final users
   targetPkgJson.peerDependencies = {};
   Object.keys(pkgJson.dependencies).forEach((dependency) => {
-    targetPkgJson.peerDependencies[dependency] = `^${pkgJson.dependencies[dependency]}`;
+    targetPkgJson.peerDependencies[dependency] = `${pkgJson.dependencies[dependency]}`;
   });
 
   // copy the needed additional files in the 'dist' folder

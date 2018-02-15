@@ -12,7 +12,7 @@
         </p>
       </div>
     </div>
-  
+
   </div>
 </div>
 
@@ -62,7 +62,7 @@
             <div highlight="all" class="my-3">
               <pre><code class="hljs html" [textContent]="htmlCode2"></code></pre>
             </div>
-            <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()" [config]="{ crop: [ { ratio: 1.5 } ] }"></ngx-img>
+            <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()" [config]="{ crop: [ { ratio: 1.5, viewMode: 0 } ] }"></ngx-img>
           </div>
         </ng-template>
         <ng-template [ngSwitchCase]="3">
@@ -70,7 +70,7 @@
             <div highlight="all" class="my-3">
               <pre><code class="hljs html" [textContent]="htmlCode3"></code></pre>
             </div>
-            <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()" [config]="{ crop: [ { ratio: 1.5 }, { ratio: 1 } ] }"></ngx-img>
+            <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()" [config]="{ crop: [ { ratio: 1.5, viewMode: 0 }, { ratio: 1, viewMode: 0 } ] }"></ngx-img>
           </div>
         </ng-template>
       </ng-container>

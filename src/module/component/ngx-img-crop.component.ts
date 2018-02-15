@@ -20,7 +20,8 @@ export class NgxImgCropComponent implements OnInit {
   _config: any = {
     crop: [
       {
-        ratio: null
+        ratio: null,
+        viewMode: 0
       }
     ]
   };
@@ -60,13 +61,13 @@ export class NgxImgCropComponent implements OnInit {
         }
         this.cropper[i] = new Cropper(el, {
           aspectRatio: opt.ratio,
-          viewMode: 2,
+          viewMode: opt.viewMode || 0,
           crop: () => {
             if (this.timer[i]) {
               clearTimeout(this.timer[i]);
             }
             this.timer[i] = setTimeout(() => {
-              this.onCropEvent(i, this.cropper[i].getCroppedCanvas(options).toDataURL('image/jpeg'));
+              this.onCropEvent(i, this.cropper[i].getCroppedCanvas(options).toDataURL('image/png'));
             }, 500);
           }
         });

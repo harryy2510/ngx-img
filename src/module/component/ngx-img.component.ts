@@ -11,9 +11,33 @@ export class NgxImgComponent implements OnInit {
   @Input() imgSrc = '';
   @Input() remove = true;
   @ViewChild('fileInput') fileInput: any;
-  @Input() config: any = {};
-  @Input() errorTexts = {};
-  @Input() text = {};
+  @Input() config: {
+    fileSize: number,
+    minWidth: number,
+    maxWidth: number,
+    minHeight: number,
+    maxHeight: number,
+    fileType: string[],
+    height: number
+  };
+  @Input() errorTexts: {
+    fileSize: string,
+    minWidth: string,
+    maxWidth: string,
+    minHeight: string,
+    maxHeight: string,
+    imageFormat: string,
+    fileType: string
+  };
+  @Input() text: {
+    default: string,
+    _default: string,
+    button: string,
+    try_again: string,
+    replace: string,
+    reset: string,
+    error: string
+  };
 
   hasPreview = false;
   hasError = false;

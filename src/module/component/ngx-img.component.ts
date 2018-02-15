@@ -30,6 +30,7 @@ export class NgxImgComponent implements OnInit {
     default: 'Drag and drop',
     _default: 'Drag and drop or click',
     button: 'Choose File',
+    try_again: 'Try Again',
     replace: 'Drag and drop or click to replace',
     reset: 'Remove',
     error: 'Oops, something wrong happened.'

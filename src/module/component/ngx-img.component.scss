@@ -141,13 +141,18 @@ $ngx-img-loader-trace: #777 !default;
       }
     }
 
-    p {
+    p, div {
       margin: 5px 0 0 0;
 
       &.ngx-img-error {
         color: $ngx-img-error-color;
         font-weight: bold;
         display: none;
+      }
+
+      ul, li {
+        list-style: none;
+        padding: 0;
       }
     }
   }

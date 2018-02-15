@@ -62,7 +62,7 @@
             <div highlight="all" class="my-3">
               <pre><code class="hljs html" [textContent]="htmlCode2"></code></pre>
             </div>
-            <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()" [config]="{ crop: [ { ratio: 1.5, viewMode: 0 } ] }"></ngx-img>
+            <ngx-img (onSelect)="onSelect($event)" (onReset)="reset()" [config]="{ crop: [ { ratio: 1.5, viewMode: 0 } ], quality: 0.8 }"></ngx-img>
           </div>
         </ng-template>
         <ng-template [ngSwitchCase]="3">

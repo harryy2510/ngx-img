@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import ImageCompressor from 'image-compressor.js';
 
 
 @Component({
@@ -6,51 +7,72 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
   templateUrl: './ngx-img.component.html',
   styleUrls: ['./ngx-img.component.scss']
 })
-export class NgxImgComponent implements OnInit {
+export class NgxImgComponent implements OnInit, OnDestroy {
   @Input() fileName = '';
   @Input() imgSrc = '';
   @Input() remove = true;
   @ViewChild('fileInput') fileInput: any;
   @Input() config: {
-    fileSize: number,
-    minWidth: number,
-    maxWidth: number,
-    minHeight: number,
-    maxHeight: number,
-    fileType: string[],
-    height: number
+    fileSize?: number,
+    minWidth?: number,
+    maxWidth?: number,
+    minHeight?: number,
+    maxHeight?: number,
+    fileType?: string[],
+    height?: number,
+    quality?: number,
+    crop?: any
   };
   @Input() errorTexts: {
-    fileSize: string,
-    minWidth: string,
-    maxWidth: string,
-    minHeight: string,
-    maxHeight: string,
-    imageFormat: string,
-    fileType: string
+    fileSize?: string,
+    minWidth?: string,
+    maxWidth?: string,
+    minHeight?: string,
+    maxHeight?: string,
+    imageFormat?: string,
+    fileType?: string
   };
   @Input() text: {
-    default: string,
-    _default: string,
-    button: string,
-    try_again: string,
-    replace: string,
-    reset: string,
-    error: string
+    default?: string,
+    _default?: string,
+    button?: string,
+    try_again?: string,
+    replace?: string,
+    reset?: string,
+    error?: string
   };
 
   hasPreview = false;
   hasError = false;
   isLoading = false;
-  _config: any = {
+  _config: {
+    fileSize?: number,
+    minWidth?: number,
+    maxWidth?: number,
+    minHeight?: number,
+    maxHeight?: number,
+    fileType?: string[],
+    height?: number,
+    quality?: number,
+    crop?: any
+  } = {
     fileSize: 2048,
     minWidth: 0,
     maxWidth: 0,
     minHeight: 0,
     maxHeight: 0,
-    fileType: ['image/gif', 'image/jpeg', 'image/png']
+    fileType: ['image/gif', 'image/jpeg', 'image/png'],
+    quality: 0.8
   };
-  _text = {
+  _text: {
+    default?: string,
+    _default?: string,
+    button?: string,
+    try_again?: string,
+    replace?: string,
+    reset?: string,
+    error?: string
+  } = {
     default: 'Drag and drop',
     _default: 'Drag and drop or click',
     button: 'Choose File',
@@ -59,7 +81,15 @@ export class NgxImgComponent implements OnInit {
     reset: 'Remove',
     error: 'Oops, something wrong happened.'
   };
-  _errorTexts = {
+  _errorTexts: {
+    fileSize?: string,
+    minWidth?: string,
+    maxWidth?: string,
+    minHeight?: string,
+    maxHeight?: string,
+    imageFormat?: string,
+    fileType?: string
+  } = {
     fileSize: 'The file size is too big ({{ value }} max).',
     minWidth: 'The image width is too small ({{ value }}}px min).',
     maxWidth: 'The image width is too big ({{ value }}}px max).',
@@ -89,28 +119,42 @@ export class NgxImgComponent implements OnInit {
       return false;
     }
 
-    this.file = e.target.files[0];
-    if (!this.validate()) {
-      this.hasError = true;
-      this.reset();
-      return false;
-    }
+    const imageCompressor = new ImageCompressor(null);
 
-    this.isLoading = true;
-    const reader: FileReader = new FileReader();
-    reader.onloadend = (ev: any) => {
-      this.imgSrc = ev.target.result;
-      this.fileName = this.file.name;
-      this.hasPreview = true;
-      this.isLoading = false;
-      if (this._config.crop) {
-        this.mode = 'crop';
-      } else {
-        this.onSelectEvent(this.imgSrc);
+    imageCompressor.compress(e.target.files[0], {
+      quality: this._config.quality,
+      maxWidth: this._config.maxWidth,
+      maxHeight: this._config.maxHeight,
+      convertSize: Infinity
+    })
+    .then((result: any) => {
+      console.log(result);
+      this.file = result;
+      if (!this.validate()) {
+        this.hasError = true;
+        this.reset();
+        return false;
       }
-    };
-    reader.readAsDataURL(this.file);
-    this.fileName = this.file.name;
+
+      this.isLoading = true;
+      const reader: FileReader = new FileReader();
+      reader.onloadend = (ev: any) => {
+        this.imgSrc = ev.target.result;
+        this.fileName = this.file.name;
+        this.hasPreview = true;
+        this.isLoading = false;
+        if (this._config.crop) {
+          this.mode = 'crop';
+        } else {
+          this.onSelectEvent(this.imgSrc);
+        }
+      };
+      reader.readAsDataURL(this.file);
+      this.fileName = this.file.name;
+    })
+    .catch((err: any) => {
+      // Handle the error
+    });
   }
 
   reset() {
@@ -166,5 +210,9 @@ export class NgxImgComponent implements OnInit {
 
   onSelectEvent(data: any) {
     this.onSelect.emit(data);
+  }
+
+  ngOnDestroy() {
+    this.reset();
   }
 }

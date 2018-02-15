@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import * as Cropper from 'cropperjs'
 
 @Component({
@@ -8,7 +8,7 @@ import * as Cropper from 'cropperjs'
   encapsulation: ViewEncapsulation.None
 })
 
-export class NgxImgCropComponent implements OnInit {
+export class NgxImgCropComponent implements OnInit, OnDestroy {
   @Input() config: any = {};
   @Input() imgSrc: any;
   @Output() onCrop: EventEmitter<any> = new EventEmitter();
@@ -85,9 +85,18 @@ export class NgxImgCropComponent implements OnInit {
   }
 
   reset() {
+    this.cropper.forEach((el: any) => {
+      if (el) {
+        el.destroy();
+      }
+    });
     this.cropper = [];
     this.imgData = [];
     this.imgSrc = '';
     this.onReset.emit();
+  }
+
+  ngOnDestroy() {
+    this.reset();
   }
 }

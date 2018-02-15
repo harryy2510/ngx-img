@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
   minHeight: 0,  // minimum height of image that can be uploaded (by default 0, signifies any height)
   maxHeight: 0,  // maximum height of image that can be uploaded (by default 0, signifies any height)
   fileType: ['image/gif', 'image/jpeg', 'image/png'] // mime type of files accepted
+  height: 400, // height of cropper
+  quality: 0.8, // quaity of image after compression
   crop: [  // array of objects for mulitple image crop instances (by default null, signifies no cropping)
     {
       ratio: 1, // ratio in which image needed to be cropped (by default null, signifies ratio to be free of any restrictions)

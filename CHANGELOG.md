@@ -1,3 +1,8 @@
+<a name="10.10.0"></a>
+# [10.10.0](https://github.com/harryy2510/ngx-img/compare/v10.9.3...v10.10.0) (2018-02-15)
+
+
+
 <a name="10.9.3"></a>
 ## [10.9.3](https://github.com/harryy2510/ngx-img/compare/v10.9.2...v10.9.3) (2018-02-15)
 

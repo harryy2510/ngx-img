@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import * as Cropper from 'cropperjs'
+import ImageCompressor from 'image-compressor.js';
 
 @Component({
   selector: 'ngx-img-crop',

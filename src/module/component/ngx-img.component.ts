@@ -1,6 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import ImageCompressor from 'image-compressor.js';
-
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'ngx-img',
@@ -56,14 +54,14 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     quality?: number,
     crop?: any
   } = {
-    fileSize: 2048,
-    minWidth: 0,
-    maxWidth: 0,
-    minHeight: 0,
-    maxHeight: 0,
-    fileType: ['image/gif', 'image/jpeg', 'image/png'],
-    quality: 0.8
-  };
+      fileSize: 2048,
+      minWidth: 0,
+      maxWidth: 0,
+      minHeight: 0,
+      maxHeight: 0,
+      fileType: ['image/gif', 'image/jpeg', 'image/png'],
+      quality: 0.8
+    };
   _text: {
     default?: string,
     _default?: string,
@@ -73,14 +71,14 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     reset?: string,
     error?: string
   } = {
-    default: 'Drag and drop',
-    _default: 'Drag and drop or click',
-    button: 'Choose File',
-    try_again: 'Try Again',
-    replace: 'Drag and drop or click to replace',
-    reset: 'Remove',
-    error: 'Oops, something wrong happened.'
-  };
+      default: 'Drag and drop',
+      _default: 'Drag and drop or click',
+      button: 'Choose File',
+      try_again: 'Try Again',
+      replace: 'Drag and drop or click to replace',
+      reset: 'Remove',
+      error: 'Oops, something wrong happened.'
+    };
   _errorTexts: {
     fileSize?: string,
     minWidth?: string,
@@ -90,14 +88,14 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     imageFormat?: string,
     fileType?: string
   } = {
-    fileSize: 'The file size is too big ({{ value }} max).',
-    minWidth: 'The image width is too small ({{ value }}}px min).',
-    maxWidth: 'The image width is too big ({{ value }}}px max).',
-    minHeight: 'The image height is too small ({{ value }}}px min).',
-    maxHeight: 'The image height is too big ({{ value }}}px max).',
-    imageFormat: 'The image format is not allowed ({{ value }} only).',
-    fileType: 'The file type is not allowed.'
-  };
+      fileSize: 'The file size is too big ({{ value }} max).',
+      minWidth: 'The image width is too small ({{ value }}}px min).',
+      maxWidth: 'The image width is too big ({{ value }}}px max).',
+      minHeight: 'The image height is too small ({{ value }}}px min).',
+      maxHeight: 'The image height is too big ({{ value }}}px max).',
+      imageFormat: 'The image format is not allowed ({{ value }} only).',
+      fileType: 'The file type is not allowed.'
+    };
   errors: any = [];
   file: any;
   mode = 'upload';
@@ -119,42 +117,28 @@ export class NgxImgComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    const imageCompressor = new ImageCompressor(null);
+    this.file = e.target.files[0];
+    if (!this.validate()) {
+      this.hasError = true;
+      this.reset();
+      return false;
+    }
 
-    imageCompressor.compress(e.target.files[0], {
-      quality: this._config.quality,
-      maxWidth: this._config.maxWidth,
-      maxHeight: this._config.maxHeight,
-      convertSize: Infinity
-    })
-    .then((result: any) => {
-      console.log(result);
-      this.file = result;
-      if (!this.validate()) {
-        this.hasError = true;
-        this.reset();
-        return false;
-      }
-
-      this.isLoading = true;
-      const reader: FileReader = new FileReader();
-      reader.onloadend = (ev: any) => {
-        this.imgSrc = ev.target.result;
-        this.fileName = this.file.name;
-        this.hasPreview = true;
-        this.isLoading = false;
-        if (this._config.crop) {
-          this.mode = 'crop';
-        } else {
-          this.onSelectEvent(this.imgSrc);
-        }
-      };
-      reader.readAsDataURL(this.file);
+    this.isLoading = true;
+    const reader: FileReader = new FileReader();
+    reader.onloadend = (ev: any) => {
+      this.imgSrc = ev.target.result;
       this.fileName = this.file.name;
-    })
-    .catch((err: any) => {
-      // Handle the error
-    });
+      this.hasPreview = true;
+      this.isLoading = false;
+      if (this._config.crop) {
+        this.mode = 'crop';
+      } else {
+        this.onSelectEvent(this.imgSrc);
+      }
+    };
+    reader.readAsDataURL(this.file);
+    this.fileName = this.file.name;
   }
 
   reset() {

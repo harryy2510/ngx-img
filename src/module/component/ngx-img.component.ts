@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {NgxImgService} from '../service/ngx-img.service';
 
 @Component({
   selector: 'ngx-img',
@@ -54,14 +55,14 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     quality?: number,
     crop?: any
   } = {
-      fileSize: 2048,
-      minWidth: 0,
-      maxWidth: 0,
-      minHeight: 0,
-      maxHeight: 0,
-      fileType: ['image/gif', 'image/jpeg', 'image/png'],
-      quality: 0.8
-    };
+    fileSize: 2048,
+    minWidth: 0,
+    maxWidth: 0,
+    minHeight: 0,
+    maxHeight: 0,
+    fileType: ['image/gif', 'image/jpeg', 'image/png'],
+    quality: 0.8
+  };
   _text: {
     default?: string,
     _default?: string,
@@ -71,14 +72,14 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     reset?: string,
     error?: string
   } = {
-      default: 'Drag and drop',
-      _default: 'Drag and drop or click',
-      button: 'Choose File',
-      try_again: 'Try Again',
-      replace: 'Drag and drop or click to replace',
-      reset: 'Remove',
-      error: 'Oops, something wrong happened.'
-    };
+    default: 'Drag and drop',
+    _default: 'Drag and drop or click',
+    button: 'Choose File',
+    try_again: 'Try Again',
+    replace: 'Drag and drop or click to replace',
+    reset: 'Remove',
+    error: 'Oops, something wrong happened.'
+  };
   _errorTexts: {
     fileSize?: string,
     minWidth?: string,
@@ -88,19 +89,22 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     imageFormat?: string,
     fileType?: string
   } = {
-      fileSize: 'The file size is too big ({{ value }} max).',
-      minWidth: 'The image width is too small ({{ value }}}px min).',
-      maxWidth: 'The image width is too big ({{ value }}}px max).',
-      minHeight: 'The image height is too small ({{ value }}}px min).',
-      maxHeight: 'The image height is too big ({{ value }}}px max).',
-      imageFormat: 'The image format is not allowed ({{ value }} only).',
-      fileType: 'The file type is not allowed.'
-    };
+    fileSize: 'The file size is too big ({{ value }} max).',
+    minWidth: 'The image width is too small ({{ value }}}px min).',
+    maxWidth: 'The image width is too big ({{ value }}}px max).',
+    minHeight: 'The image height is too small ({{ value }}}px min).',
+    maxHeight: 'The image height is too big ({{ value }}}px max).',
+    imageFormat: 'The image format is not allowed ({{ value }} only).',
+    fileType: 'The file type is not allowed.'
+  };
   errors: any = [];
   file: any;
   mode = 'upload';
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
   @Output() onReset: EventEmitter<any> = new EventEmitter();
+
+  constructor(private _service: NgxImgService) {
+  }
 
   ngOnInit() {
     this.reset();
@@ -134,7 +138,12 @@ export class NgxImgComponent implements OnInit, OnDestroy {
       if (this._config.crop) {
         this.mode = 'crop';
       } else {
-        this.onSelectEvent(this.imgSrc);
+        this._service.compress(this.imgSrc, this._config).then((res: any) => {
+          this.onSelectEvent(res);
+        })
+        .catch(() => {
+          this.onSelectEvent(this.imgSrc);
+        });
       }
     };
     reader.readAsDataURL(this.file);

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import * as Cropper from 'cropperjs'
-import ImageCompressor from 'image-compressor.js';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import * as Cropper from 'cropperjs';
+import {NgxImgService} from '../service/ngx-img.service';
 
 @Component({
   selector: 'ngx-img-crop',
@@ -29,6 +29,9 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
   timer: any = [];
   cropper: any = [];
   imgData: any = [];
+
+  constructor(private _service: NgxImgService) {
+  }
 
   ngOnInit() {
     this._config = Object.assign(this._config, this.config);
@@ -77,12 +80,16 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
   }
 
   onCropEvent(i: number, data: any) {
-    this.imgData[i] = data;
-    if (this.imgData.length === 1) {
-      this.onCrop.emit(this.imgData[i]);
-      return;
-    }
-    this.onCrop.emit(this.imgData);
+    this._service.compress(data, this._config).then((res: any) => {
+      this.imgData[i] = res;
+      const img = this.imgData.length === 1 ? this.imgData[i] : this.imgData;
+      this.onCrop.emit(img);
+    })
+    .catch(() => {
+      this.imgData[i] = data;
+      const img = this.imgData.length === 1 ? this.imgData[i] : this.imgData;
+      this.onCrop.emit(img);
+    });
   }
 
   reset() {

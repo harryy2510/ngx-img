@@ -100,6 +100,7 @@ export class NgxImgComponent implements OnInit, OnDestroy {
   errors: any = [];
   file: any;
   mode = 'upload';
+  @Output() onChange: EventEmitter<any> = new EventEmitter();
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
   @Output() onReset: EventEmitter<any> = new EventEmitter();
 
@@ -128,26 +129,30 @@ export class NgxImgComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.isLoading = true;
-    const reader: FileReader = new FileReader();
-    reader.onloadend = (ev: any) => {
-      this.imgSrc = ev.target.result;
-      this.fileName = this.file.name;
-      this.hasPreview = true;
-      this.isLoading = false;
-      if (this._config.crop) {
-        this.mode = 'crop';
-      } else {
-        this._service.compress(this.imgSrc, this._config).then((res: any) => {
-          this.onSelectEvent(res);
-        })
-        .catch(() => {
-          this.onSelectEvent(this.imgSrc);
-        });
-      }
-    };
-    reader.readAsDataURL(this.file);
     this.fileName = this.file.name;
+    this.onChange.emit(this.file);
+
+    if (this.file.type.split('/')[0] === 'image') {
+      this.isLoading = true;
+      const reader: FileReader = new FileReader();
+      reader.onloadend = (ev: any) => {
+        this.imgSrc = ev.target.result;
+        this.fileName = this.file.name;
+        this.hasPreview = true;
+        this.isLoading = false;
+        if (this._config.crop) {
+          this.mode = 'crop';
+        } else {
+          this._service.compress(this.imgSrc, this._config).then((res: any) => {
+            this.onSelectEvent(res);
+          })
+            .catch(() => {
+              this.onSelectEvent(this.imgSrc);
+            });
+        }
+      };
+      reader.readAsDataURL(this.file);
+    }
   }
 
   reset() {

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import * as Cropper from 'cropperjs';
+import Cropper from 'cropperjs';
 import {NgxImgService} from '../service/ngx-img.service';
 
 @Component({

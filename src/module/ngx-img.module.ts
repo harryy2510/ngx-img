@@ -18,7 +18,8 @@ export {NgxImgService} from './service/ngx-img.service';
     FormsModule
   ],
   exports: [NgxImgComponent, NgxImgCropComponent],
-  declarations: [NgxImgComponent, NgxImgCropComponent]
+  declarations: [NgxImgComponent, NgxImgCropComponent],
+  providers: [NgxImgService]
 })
 export class NgxImgModule {
   static forRoot(): ModuleWithProviders {

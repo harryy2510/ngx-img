@@ -58,9 +58,6 @@ export class NgxImgService {
         cvs.width = width;
         cvs.height = height;
 
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0, 0, width, height);
-        ctx.save();
         ctx.translate(width / 2, height / 2);
         ctx.scale(1, 1);
         ctx.drawImage(

@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class NgxImgService {
   compress(src: string, config: any, mime_type?: string) {
-    mime_type  = mime_type ? mime_type : 'image/jpeg';
+    mime_type = mime_type ? mime_type : src.substring("data:image/".length, src.indexOf(";base64"));
     return new Promise((resolve: any, reject: any) => {
       const img = new Image();
       img.src = src;
@@ -58,9 +58,6 @@ export class NgxImgService {
         cvs.width = width;
         cvs.height = height;
 
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0, 0, width, height);
-        ctx.save();
         ctx.translate(width / 2, height / 2);
         ctx.scale(1, 1);
         ctx.drawImage(

@@ -7,6 +7,7 @@ import {NgxImgService} from '../service/ngx-img.service';
   styleUrls: ['./ngx-img.component.scss']
 })
 export class NgxImgComponent implements OnInit, OnDestroy {
+  @Input() alt = '';
   @Input() fileName = '';
   @Input() imgSrc = '';
   @Input() remove = true;

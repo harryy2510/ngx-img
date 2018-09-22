@@ -28,7 +28,7 @@
       <button *ngIf="remove && hasPreview" type="button" class="ngx-img-clear" (click)="reset()">{{ _text.reset }}
       </button>
       <div class="ngx-img-preview" *ngIf="hasPreview">
-        <span class="ngx-img-render"><img [src]="imgSrc"></span>
+        <span class="ngx-img-render"><img [src]="imgSrc" [alt]="alt"></span>
         <div class="ngx-img-infos">
           <div class="ngx-img-infos-inner">
             <p class="ngx-img-filename">{{fileName}}</p>

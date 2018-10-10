@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class NgxImgService {
   compress(src: string, config: any, mime_type?: string) {
-    mime_type = mime_type ? mime_type : src.substring("data:image/".length, src.indexOf(";base64"));
+    mime_type = mime_type ? mime_type : src.substring('data:image/'.length, src.indexOf(';base64'));
     return new Promise((resolve: any, reject: any) => {
       const img = new Image();
       img.src = src;

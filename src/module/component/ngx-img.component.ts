@@ -1,10 +1,21 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {NgxImgService} from '../service/ngx-img.service';
 
 @Component({
   selector: 'ngx-img',
   templateUrl: './ngx-img.component.html',
-  styleUrls: ['./ngx-img.component.scss']
+  styleUrls: ['./ngx-img.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxImgComponent implements OnInit, OnDestroy {
   @Input() alt = '';
@@ -105,7 +116,7 @@ export class NgxImgComponent implements OnInit, OnDestroy {
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
   @Output() onReset: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _service: NgxImgService) {
+  constructor(private _service: NgxImgService, private _ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -113,6 +124,7 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     this._text = Object.assign(this._text, this.text);
     this._errorTexts = Object.assign(this._errorTexts, this.errorTexts);
     this._config = Object.assign(this._config, this.config);
+    this.markForCheck();
   }
 
   fileChangeListener(e: any) {
@@ -143,17 +155,22 @@ export class NgxImgComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         if (this._config.crop) {
           this.mode = 'crop';
+          this.markForCheck();
         } else {
           this._service.compress(this.imgSrc, this._config).then((res: any) => {
             this.onSelectEvent(res);
+            this.markForCheck();
           })
             .catch(() => {
               this.onSelectEvent(this.imgSrc);
+              this.markForCheck();
             });
         }
       };
       reader.readAsDataURL(this.file);
+      this.markForCheck();
     }
+    this.markForCheck();
   }
 
   reset() {
@@ -166,6 +183,7 @@ export class NgxImgComponent implements OnInit, OnDestroy {
       this.fileInput.nativeElement.value = '';
     }
     this.onReset.emit();
+    this.markForCheck();
   }
 
   validate() {
@@ -209,9 +227,26 @@ export class NgxImgComponent implements OnInit, OnDestroy {
 
   onSelectEvent(data: any) {
     this.onSelect.emit(data);
+    this.markForCheck();
+  }
+
+  public markForCheck() {
+    setTimeout(() => {
+      if (!this._ref['destroyed']) {
+        this._ref.markForCheck();
+        this._ref.detectChanges();
+      }
+    });
+    setTimeout(() => {
+      if (!this._ref['destroyed']) {
+        this._ref.markForCheck();
+        this._ref.detectChanges();
+      }
+    }, 300);
   }
 
   ngOnDestroy() {
     this.reset();
+    this._ref.detach();
   }
 }

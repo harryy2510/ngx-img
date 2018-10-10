@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import Cropper from 'cropperjs';
 import {NgxImgService} from '../service/ngx-img.service';
 
@@ -6,7 +16,8 @@ import {NgxImgService} from '../service/ngx-img.service';
   selector: 'ngx-img-crop',
   templateUrl: './ngx-img-crop.component.html',
   styleUrls: ['./ngx-img-crop.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class NgxImgCropComponent implements OnInit, OnDestroy {
@@ -30,7 +41,7 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
   cropper: any = [];
   imgData: any = [];
 
-  constructor(private _service: NgxImgService) {
+  constructor(private _service: NgxImgService, private _ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -72,10 +83,13 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
             }
             this.timer[i] = setTimeout(() => {
               this.onCropEvent(i, this.cropper[i].getCroppedCanvas(options).toDataURL('image/png'));
+              this.markForCheck();
             }, 500);
           }
         });
+        this.markForCheck();
       });
+      this.markForCheck();
     }, 100);
   }
 
@@ -84,11 +98,13 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
       this.imgData[i] = res;
       const img = this.imgData.length === 1 ? this.imgData[i] : this.imgData;
       this.onCrop.emit(img);
+      this.markForCheck();
     })
     .catch(() => {
       this.imgData[i] = data;
       const img = this.imgData.length === 1 ? this.imgData[i] : this.imgData;
       this.onCrop.emit(img);
+      this.markForCheck();
     });
   }
 
@@ -102,9 +118,26 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
     this.imgData = [];
     this.imgSrc = '';
     this.onReset.emit();
+    this.markForCheck();
+  }
+
+  public markForCheck() {
+    setTimeout(() => {
+      if (!this._ref['destroyed']) {
+        this._ref.markForCheck();
+        this._ref.detectChanges();
+      }
+    });
+    setTimeout(() => {
+      if (!this._ref['destroyed']) {
+        this._ref.markForCheck();
+        this._ref.detectChanges();
+      }
+    }, 300);
   }
 
   ngOnDestroy() {
     this.reset();
+    this._ref.detach();
   }
 }

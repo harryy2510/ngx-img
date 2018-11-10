@@ -72,7 +72,7 @@ export class NgxImgComponent implements OnInit, OnDestroy {
     maxWidth: 0,
     minHeight: 0,
     maxHeight: 0,
-    fileType: ['image/gif', 'image/jpeg', 'image/png'],
+    fileType: ['.gif', '.jpeg', '.png', '.jpg'],
     quality: 0.8
   };
   _text: {
@@ -188,7 +188,7 @@ export class NgxImgComponent implements OnInit, OnDestroy {
 
   validate() {
     this.errors = [];
-    if (this._config.fileType.length !== 0 && this._config.fileType.indexOf(this.file.type) === -1) {
+    if (this._config.fileType.length !== 0 && this._config.fileType.indexOf(this.file.type) === -1 && this._config.fileType.indexOf(`.${this.file.name.split('.').pop()}`) === -1) {
       this.errors = [...this.errors, this._errorTexts.fileType];
     }
 

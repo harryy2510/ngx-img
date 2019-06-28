@@ -16,6 +16,7 @@ View in action at https://harryy2510.github.io/ngx-img
 
 ## Dependencies
 * [Angular](https://angular.io) (*requires* Angular 4 or higher, tested with 4.4.6)
+* [CropperJS](https://github.com/fengyuanchen/cropperjs) (required for cropping)
 
 ## Installation
 Install above dependencies via *npm*. 

@@ -7,7 +7,8 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ElementRef
 } from '@angular/core';
 import Cropper from 'cropperjs';
 import {NgxImgService} from '../service/ngx-img.service';
@@ -41,7 +42,7 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
   cropper: any = [];
   imgData: any = [];
 
-  constructor(private _service: NgxImgService, private _ref: ChangeDetectorRef) {
+  constructor(private _service: NgxImgService, private _elementRef: ElementRef, private _ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -54,7 +55,7 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
   initializeCrop() {
     setTimeout(() => {
       this._config.crop.forEach((opt: any, i: number) => {
-        const el: any = document.getElementById('ngx-crop-img-' + i);
+        const el: any = this._elementRef.nativeElement.querySelector('#ngx-crop-img-' + i);
         const options: any = {};
         if (opt.width) {
           options.width = opt.width;

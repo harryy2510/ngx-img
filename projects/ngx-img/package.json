@@ -1,6 +1,6 @@
 {
   "name": "ngx-img",
-  "version": "10.19.2",
+  "version": "10.19.3",
   "peerDependencies": {
     "@angular/common": ">4.0.0",
     "@angular/core": ">4.0.0",

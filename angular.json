@@ -123,6 +123,46 @@
           }
         }
       }
+    },
+    "ngx-img": {
+      "projectType": "library",
+      "root": "projects/ngx-img",
+      "sourceRoot": "projects/ngx-img/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-img/tsconfig.lib.json",
+            "project": "projects/ngx-img/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-img/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-img/src/test.ts",
+            "tsConfig": "projects/ngx-img/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-img/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-img/tsconfig.lib.json",
+              "projects/ngx-img/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "angular-workspace"
 }

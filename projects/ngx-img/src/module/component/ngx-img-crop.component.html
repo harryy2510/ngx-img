@@ -1,0 +1,8 @@
+<div class="ngx-img-crop-wrapper" [style.height]="_config.height">
+  <button type="button" class="ngx-img-clear" (click)="reset()">{{ _text.reset }}</button>
+  <ng-template ngFor [ngForOf]="_config.crop" let-i="index">
+    <div class="ngx-img-crop-col">
+      <img [id]="'ngx-crop-img-' + i" [src]="imgSrc">
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,16 @@
+{
+  "name": "ngx-img",
+  "version": "10.19.2",
+  "peerDependencies": {
+    "@angular/common": ">4.0.0",
+    "@angular/core": ">4.0.0",
+    "@angular/forms": ">4.0.0"
+  },
+  "dependencies": {
+    "tslib": "~1.13.0",
+    "cropperjs": "^1.5.7"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

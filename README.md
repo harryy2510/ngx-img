@@ -1,27 +1,78 @@
-# AngularWorkspace
+<p align="center">
+  <img height="256px" width="256px" style="text-align: center;" src="https://cdn.rawgit.com/harryy2510/ngx-img/master/demo/src/assets/logo.svg">
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+# ngx-img - Angular Image Upload &amp; Crop
 
-## Development server
+[![npm version](https://badge.fury.io/js/ngx-img.svg)](https://badge.fury.io/js/ngx-img)
+[![Build Status](https://travis-ci.org/harryy2510/ngx-img.svg?branch=master)](https://travis-ci.org/harryy2510/ngx-img)
+[![Coverage Status](https://coveralls.io/repos/github/harryy2510/ngx-img/badge.svg?branch=master)](https://coveralls.io/github/harryy2510/ngx-img?branch=master)
+[![dependency Status](https://david-dm.org/harryy2510/ngx-img/status.svg)](https://david-dm.org/harryy2510/ngx-img)
+[![devDependency Status](https://david-dm.org/harryy2510/ngx-img/dev-status.svg?branch=master)](https://david-dm.org/harryy2510/ngx-img#info=devDependencies)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Demo
 
-## Code scaffolding
+View in action at https://harryy2510.github.io/ngx-img
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Dependencies
+* [Angular](https://angular.io) (*requires* Angular 4 or higher, tested upto 9.1.9)
+* [CropperJS](https://github.com/fengyuanchen/cropperjs) (required for cropping)
 
-## Build
+## Installation
+Install above dependencies via *npm*. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Now install `ngx-img` via:
+```shell
+npm install --save ngx-img
+```
 
-## Running unit tests
+---
+##### SystemJS
+>**Note**:If you are using `SystemJS`, you should adjust your configuration to point to the UMD bundle.
+In your systemjs config file, `map` needs to tell the System loader where to look for `ngx-img`:
+```js
+map: {
+  'ngx-img': 'node_modules/ngx-img/bundles/ngx-img.umd.js',
+}
+```
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Once installed you need to import the main module:
+```js
+import { NgxImgModule } from 'ngx-img';
+```
+The only remaining part is to list the imported module in your application module. The exact method will be slightly
+different for the root (top-level) module for which you should end up with the code similar to (notice ` NgxImgModule .forRoot()`):
+```js
+import { NgxImgModule } from 'ngx-img';
 
-## Running end-to-end tests
+@NgModule({
+  declarations: [AppComponent, ...],
+  imports: [NgxImgModule.forRoot(), ...],  
+  bootstrap: [AppComponent]
+})
+export class AppModule {
+}
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Other modules in your application can simply import ` NgxImgModule `:
 
-## Further help
+```js
+import { NgxImgModule } from 'ngx-img';
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+@NgModule({
+  declarations: [OtherComponent, ...],
+  imports: [NgxImgModule, ...], 
+})
+export class OtherModule {
+}
+```
+
+## Usage
+
+
+
+## License
+
+Licensed under the MIT License (MIT)
+

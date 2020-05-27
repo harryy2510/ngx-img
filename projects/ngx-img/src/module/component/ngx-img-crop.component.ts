@@ -77,6 +77,9 @@ export class NgxImgCropComponent implements OnInit, OnDestroy {
         if (opt.maxHeight) {
           options.maxHeight = opt.maxHeight;
         }
+        if (opt.fillColor) {
+          options.fillColor = opt.fillColor;
+        }
         this.cropper[i] = new Cropper(el, {
           aspectRatio: opt.ratio,
           viewMode: opt.viewMode || 0,

@@ -32,7 +32,8 @@ export class NgxImgComponent implements OnInit, OnDestroy, OnChanges {
     fileType?: string[],
     height?: number,
     quality?: number,
-    crop?: any
+    crop?: any,
+    output?: 'base64' | 'blob'
   };
   @Input() errorTexts: {
     fileSize?: string,
@@ -65,7 +66,8 @@ export class NgxImgComponent implements OnInit, OnDestroy, OnChanges {
     fileType?: string[],
     height?: number,
     quality?: number,
-    crop?: any
+    crop?: any,
+    output?: 'blob' | 'base64'
   } = {
     fileSize: 2048,
     minWidth: 0,
@@ -73,7 +75,8 @@ export class NgxImgComponent implements OnInit, OnDestroy, OnChanges {
     minHeight: 0,
     maxHeight: 0,
     fileType: ['.gif', '.jpeg', '.png', '.jpg'],
-    quality: 0.8
+    quality: 0.8,
+    output: 'base64'
   };
   _text: {
     default?: string,

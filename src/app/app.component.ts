@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
         maxHeight: 0,  // maximum height of image to be exported (by default 0, signifies any height)
         width: 0,  // width of image to be exported (by default 0, signifies any width)
         height: 0,  // height of image to be exported (by default 0, signifies any height)
+        output: 'base64',  // Output format. Can be 'base64' or 'blob'. (by default 'base64')
       }
     ]
   }`;

@@ -69,7 +69,11 @@ export class NgxImgService {
           Math.floor(destHeight)
         );
         ctx.restore();
-        resolve(cvs.toDataURL(mimeType, config.quality));
+        if (config.output === 'blob') {
+          cvs.toBlob(resolve, mimeType, config.quality);
+        } else {
+          resolve(cvs.toDataURL(mimeType, config.quality));
+        }
       };
     });
   }

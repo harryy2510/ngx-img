@@ -16,7 +16,7 @@
 
 ---
 
-> **Note:** This project is no longer actively maintained. It works with Angular 4 through 7. For newer Angular versions, consider alternatives.
+> **Note:** This project is archived and no longer actively maintained. It works with Angular 4 through 7.
 
 ---
 
